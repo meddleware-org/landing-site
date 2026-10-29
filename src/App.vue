@@ -35,7 +35,7 @@ useColorMode('dark')
     <template #end>
       <a href="https://dash.meddleware.co.uk" class="footer-link">Dashboard</a>
       <a href="https://docs.meddleware.co.uk" class="footer-link" target="_blank" rel="noopener noreferrer">Documentation</a>
-      <a href="https://dev.meddleware.co.uk" class="footer-link" target="_blank" rel="noopener noreferrer">Developer docs</a>
+      <a href="https://meddleware.dev" class="footer-link" target="_blank" rel="noopener noreferrer">Developer docs</a>
     </template>
   </AppFooter>
 </template>

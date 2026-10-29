@@ -17,4 +17,4 @@ Address: https://meddleware.co.uk
 ## Documentation
 
 - [User documentation (llms.txt)](https://docs.meddleware.co.uk/llms.txt)
-- [Developer documentation (llms.txt)](https://dev.meddleware.co.uk/llms.txt)
+- [Developer documentation (llms.txt)](https://meddleware.dev/llms.txt)
