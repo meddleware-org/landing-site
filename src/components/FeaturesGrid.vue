@@ -1,62 +1,24 @@
 <script setup lang="ts">
-import ToolCard from './ToolCard.vue'
-
-const tools = [
-  {
-    icon: '🗄',
-    title: 'Walrus Storage',
-    description:
-      'Decentralised, tamper-proof blob storage on Sui. Upload, manage, and extend the lifetime of blobs — no backend required.',
-    href: 'https://sui-walrus-storage.meddleware.co.uk',
-  },
-  {
-    icon: '🔒',
-    title: 'Sealed Storage',
-    description:
-      'End-to-end encrypted blobs with Sui-based access control. Only holders of the matching on-chain NFT can decrypt.',
-    href: 'https://sui-sealed-storage.meddleware.co.uk',
-  },
-  {
-    icon: '🔐',
-    title: 'Access Gate',
-    description:
-      'NFT-based access control for any HTTP service. Gate uploads, APIs, and content behind a soulbound Sui NFT.',
-    href: 'https://sui-access-gate.meddleware.co.uk',
-  },
-  {
-    icon: '🪙',
-    title: 'Token Issuance',
-    description:
-      'Deploy your own Sui coin fully client-side in under a minute. Your wallet signs, your keys — no intermediaries.',
-    href: 'https://sui-token-issuance.meddleware.co.uk',
-  },
-  {
-    icon: '📊',
-    title: 'Treasury',
-    description:
-      'A read-only view of the organisation treasury: platform commission, balances and recent access-pass activity.',
-    href: 'https://treasury.meddleware.co.uk',
-  },
-] as const
+import { UiCard } from '@meddleware/ui'
+import { TOOLS } from '../tools'
 </script>
 
 <template>
   <section class="features" aria-labelledby="features-heading">
-    <div class="features__inner">
-      <header class="features__header">
-        <h2 id="features-heading" class="features__title">What's in the dashboard</h2>
-        <p class="features__subtitle">
-          Five on-chain tools — all accessible via a single wallet connection at
-          <a href="https://dash.meddleware.co.uk">dash.meddleware.co.uk</a>,
-          or as standalone micro-apps on their own subdomains.
-        </p>
-      </header>
-      <ul class="features__grid" role="list">
-        <li v-for="tool in tools" :key="tool.title">
-          <ToolCard v-bind="tool" />
-        </li>
-      </ul>
-    </div>
+    <header class="intro">
+      <h2 id="features-heading">What's in the dashboard</h2>
+      <p>
+        Five on-chain tools — all accessible via a single wallet connection at
+        <a href="https://dash.meddleware.co.uk">dash.meddleware.co.uk</a>,
+        or as standalone micro-apps on their own subdomains.
+      </p>
+    </header>
+    <ul class="grid" role="list">
+      <UiCard v-for="tool in TOOLS" :key="tool.title" as="li" plain :level="3" :title="tool.title" :href="tool.href">
+        <template #icon><span aria-hidden="true">{{ tool.icon }}</span></template>
+        <p>{{ tool.description }}</p>
+      </UiCard>
+    </ul>
   </section>
 </template>
 
@@ -64,41 +26,28 @@ const tools = [
 .features {
   padding: var(--space-xl) var(--space-sm);
   background: var(--surface);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
+  border-block: 1px solid var(--border);
 }
 
-.features__inner {
+.intro,
+.grid {
   max-width: 56rem;
   margin-inline: auto;
 }
 
-.features__header {
-  text-align: center;
+.intro {
   margin-bottom: var(--space-lg);
+  text-align: center;
 }
 
-.features__title {
-  margin: 0 0 var(--space-xs);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  line-height: var(--leading-tight, 1.2);
-  color: var(--text);
-}
-
-.features__subtitle {
-  margin: 0;
-  font-size: var(--font-size-sm);
+.intro p {
   color: var(--muted);
-  line-height: var(--leading-relaxed, 1.6);
+  overflow-wrap: anywhere;
 }
 
-.features__grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
   gap: var(--space-xs);
 }
 </style>

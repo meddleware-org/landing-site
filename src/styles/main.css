@@ -1,31 +1,11 @@
-/* Landing-page layout resets and base styles. */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
+/* The only page-level rules the ui reset does not already give: how links are underlined, and smooth in-page scrolling for those who have
+   not asked for less motion. */
 html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--mw-font-sans, system-ui, sans-serif);
-  line-height: var(--leading-normal, 1.5);
-  -webkit-font-smoothing: antialiased;
-}
-
-a {
-  color: var(--accent);
   text-underline-offset: 0.2em;
 }
 
-img,
-svg {
-  display: block;
-  max-width: 100%;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }

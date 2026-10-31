@@ -5,7 +5,7 @@
 import { readFileSync } from 'node:fs'
 import { test, expect, type Page } from '@playwright/test'
 
-const csp = readFileSync('Dockerfile', 'utf8').match(/^ARG CSP="([^"]*)"/m)?.[1]
+const csp = readFileSync('Dockerfile', 'utf8').match(/^ARG CSP="([^"]*)"/m)?.[1]?.replace(/;\s*upgrade-insecure-requests/, '') // plain http on localhost: WebKit would upgrade it to https
 if (!csp) throw new Error("no 'ARG CSP=\"…\"' default in the Dockerfile")
 
 async function withPolicy(page: Page): Promise<void> {

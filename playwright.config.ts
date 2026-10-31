@@ -1,21 +1,6 @@
-import { defineConfig, devices } from '@playwright/test'
+import { definePlaywrightConfig } from '@meddleware/frontend-config/playwright'
 
-// Real-browser accessibility gate: the built page and the 404 page are audited with axe across every theme × season.
-// `npm run test:e2e` builds the site and serves it with `vite preview`; CI installs Chromium first.
-const PORT = 4176
-
-export default defineConfig({
-  testDir: './e2e',
-  fullyParallel: true,
-  forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 1 : 0,
-  reporter: 'list',
-  use: { baseURL: `http://localhost:${PORT}`, viewport: { width: 1280, height: 900 } },
-  webServer: {
-    command: `npm run build && npx vite preview --port ${PORT} --strictPort`,
-    url: `http://localhost:${PORT}/`,
-    reuseExistingServer: !process.env.CI,
-    timeout: 180_000,
-  },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
-})
+// Browser tests of the BUILT app (`vite preview` of dist): Chromium locally, all five browser projects in CI (E2E_BROWSERS=all to run
+// them locally). Every request that leaves localhost is refused in the specs, so runs need no network. The screenshot capture
+// (`npm run shots`) is for looking, not asserting.
+export default definePlaywrightConfig({ port: 4176 })

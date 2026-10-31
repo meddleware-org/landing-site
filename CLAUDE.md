@@ -13,18 +13,18 @@ marketing/navigation page. Keep it that way.
 
 ```
 src/
-  App.vue             AppHeader (transparent) + RouterView + AppFooter (dark)
-  routes.ts           `/` HomeView + catch-all NotFoundView (served by 404.html with status 404)
+  main.ts / not-found.ts  The entries of index.html and 404.html: tokens, seasons, the ui reset, then mountPage(view)
+  mount.ts            mountPage(view): the shell (App) around one view
+  App.vue             UiAppShell (skip link, <main>) + AppHeader (transparent; site links, ColorModeControl) + AppFooter (dark)
+  tools.ts            The tools shown on the page: one card each
   views/
     HomeView.vue      Composes HeroSection + FeaturesGrid + CtaSection
     NotFoundView.vue  The 404 page content
   components/
-    HeroSection.vue   Full-viewport hero with gradient, headline, CTAs
-    FeaturesGrid.vue  Responsive grid of ToolCard entries — one per live tool
-    ToolCard.vue      Emoji icon + title + description + optional link
+    HeroSection.vue   Full-viewport hero with gradient, headline, UiButton CTAs
+    FeaturesGrid.vue  A UiCard (a link through its title) per entry of tools.ts
     CtaSection.vue    Secondary CTA strip with dashboard and docs links
-  styles/
-    main.css          Layout resets; imports after design-tokens + ui base.css
+  styles/main.css     Link underline offset and smooth in-page scrolling (the rest is the ui reset)
   env.d.ts            Vite client types + *.vue shim
 ```
 
@@ -58,8 +58,15 @@ Ingress: `meddleware.co.uk` → `post-bootstrap/landing-site/base/ingress.yaml`.
 Cloudflare Tunnel: `meddleware.co.uk` → `https://nginx-ingress-controller.nginx-ingress.svc:443`
 (No TLS Verify; HTTP Host Header `meddleware.co.uk`).
 
-Legal files (`public/legal/`) must be copied from `repos/ui/public/legal/` before deploying
-so the `CopyrightLine` component's symbol links resolve correctly.
+**This site is the one canonical host of the legal documents** (`public/legal/`, served at `https://meddleware.co.uk/legal/`). Every other
+app links to them there (`CopyrightLine`'s default `legalBase`) and ships no copy; here the footer uses `legal-base="/legal/"` so they are
+served from this origin. Do not delete `public/legal/` here.
+
+**No router.** The page is one route, so there is no vue-router: `index.html` and `404.html` are two entries (`main.ts`, `not-found.ts`)
+over the same shell, and the server answers an unknown path with `404.html` and a real 404 status.
+
+**Dark is the brand default** (`themeInit({ default: 'dark' })` in `vite.config.ts` applies it before first paint, and `useColorMode('dark')`);
+the header has the colour-mode control and a visitor's saved choice always wins.
 
 ## Build
 

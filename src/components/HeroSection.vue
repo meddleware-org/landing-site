@@ -1,30 +1,24 @@
 <script setup lang="ts">
-// No reactive state — static hero section.
+import { UiButton } from '@meddleware/ui'
 </script>
 
 <template>
   <section class="hero" aria-labelledby="hero-headline">
-    <div class="hero__content">
-      <p class="hero__eyebrow" aria-hidden="true">◆ On-chain tooling</p>
-      <h1 id="hero-headline" class="hero__headline">
-        Tooling for the<br />decentralised web
-      </h1>
-      <p class="hero__subheading">
+    <div class="content">
+      <p class="eyebrow" aria-hidden="true">◆ On-chain tooling</p>
+      <h1 id="hero-headline">Tooling for the decentralised web</h1>
+      <p class="subheading">
         Protocol-agnostic infrastructure, developer tools, and on-chain primitives.
-        <br class="hero__br" />
+        <br class="line-break" />
         Currently live on Sui.
       </p>
-      <div class="hero__actions">
-        <a href="https://dash.meddleware.co.uk" class="hero__cta hero__cta--primary">
-          Open Dashboard
-        </a>
-        <a href="https://docs.meddleware.co.uk" class="hero__cta hero__cta--secondary"
-           target="_blank" rel="noopener noreferrer">
-          Documentation ↗
-        </a>
-      </div>
+      <p class="actions">
+        <UiButton href="https://dash.meddleware.co.uk">Open Dashboard</UiButton>
+        <UiButton href="https://docs.meddleware.co.uk" variant="secondary" target="_blank" rel="noopener noreferrer">Documentation ↗</UiButton>
+      </p>
     </div>
-    <div class="hero__glyph" aria-hidden="true">◆</div>
+    <!-- A large decorative mark: a shape, not text, so there is nothing for contrast to apply to. -->
+    <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 0 24 12 12 24 0 12Z" /></svg>
   </section>
 </template>
 
@@ -42,100 +36,71 @@
     var(--bg);
 }
 
-.hero__content {
+.content {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-raised);
+  min-width: 0;
   max-width: 44rem;
   text-align: center;
 }
 
-.hero__eyebrow {
-  margin: 0 0 var(--space-xs);
+.eyebrow {
   font-size: var(--font-size-sm);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   color: var(--accent);
-  opacity: 0.85;
 }
 
-.hero__headline {
-  margin: 0 0 var(--space-sm);
+h1 {
+  margin-bottom: var(--space-sm);
   font-size: clamp(var(--font-size-2xl), 7vw, var(--font-size-3xl));
-  font-weight: 700;
-  line-height: var(--leading-tight, 1.2);
+  line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
-  color: var(--text);
+  text-wrap: balance;
+  /* At a large text size a long word is broken rather than pushed out of the screen. */
+  overflow-wrap: anywhere;
 }
 
-.hero__subheading {
-  margin: 0 0 var(--space-md);
+.subheading {
+  margin-bottom: var(--space-md);
   font-size: var(--font-size-md);
-  line-height: var(--leading-relaxed, 1.6);
+  line-height: var(--leading-relaxed);
   color: var(--muted);
 }
 
-.hero__br {
+.line-break {
   display: none;
 }
 
-@media (width >= 600px) {
-  .hero__br {
+@media (width >= 37.5em) {
+  .line-break {
     display: inline;
   }
 }
 
-.hero__actions {
+.actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: var(--space-xs);
+  margin: 0;
 }
 
-.hero__cta {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-2xs) var(--space-sm);
-  border-radius: var(--radius);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  text-decoration: none;
-  transition: opacity var(--transition-base, 150ms ease), transform var(--transition-base, 150ms ease);
-}
-
-.hero__cta:hover {
-  opacity: 0.85;
-  transform: translateY(-1px);
-}
-
-.hero__cta--primary {
-  background: var(--accent);
-  color: var(--accent-contrast);
-}
-
-.hero__cta--secondary {
-  background: color-mix(in srgb, var(--text) 10%, transparent);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
-/* Large decorative glyph — hidden on small screens to avoid clutter. */
-.hero__glyph {
+.glyph {
   position: absolute;
-  right: -0.15em;
-  bottom: -0.2em;
-  font-size: 40vw;
-  font-weight: 700;
-  color: var(--accent);
-  opacity: 0.03;
+  right: -6vw;
+  bottom: -8vw;
+  width: 40vw;
+  height: 40vw;
+  fill: var(--accent);
+  opacity: 0.04;
   pointer-events: none;
-  user-select: none;
-  line-height: 1;
 }
 
-@media (width <= 480px) {
-  .hero__glyph {
+@media (width <= 30em) {
+  .glyph {
     display: none;
   }
 }

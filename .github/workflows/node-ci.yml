@@ -73,9 +73,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install --with-deps chromium firefox webkit
       - name: Built page and 404 page, every theme × season
         run: npm run test:e2e
+        env:
+          E2E_BROWSERS: all
+
+      - name: Lighthouse (accessibility 100, best practices, bundle budgets)
+        run: npx lhci autorun
 
   image:
     name: Image (build and probe)

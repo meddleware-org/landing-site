@@ -1,102 +1,79 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import { AppHeader, AppFooter, CopyrightLine, useColorMode } from '@meddleware/ui'
+import { AppFooter, AppHeader, ColorModeControl, CopyrightLine, UiAppShell, useColorMode } from '@meddleware/ui'
 
-// Initialise the colour mode (dark default); landing has no toggle, so the binding is unused.
-useColorMode('dark')
+// Dark is the brand default; a visitor's saved choice always wins.
+const { mode, set } = useColorMode('dark')
 </script>
 
 <template>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <UiAppShell>
+    <template #header>
+      <AppHeader variant="transparent" :sticky="true" :solidify-on-scroll="true">
+        <template #brand>
+          <a href="/" class="brand" aria-label="Meddleware home"><span class="mark" aria-hidden="true">◆</span> Meddleware</a>
+        </template>
+        <template #actions>
+          <nav aria-label="Site">
+            <a href="https://dash.meddleware.co.uk">Dashboard</a>
+            <a href="https://docs.meddleware.co.uk" target="_blank" rel="noopener noreferrer">Docs</a>
+          </nav>
+          <ColorModeControl :model-value="mode" @update:model-value="set" />
+        </template>
+      </AppHeader>
+    </template>
 
-  <AppHeader variant="transparent" :sticky="true" :solidify-on-scroll="true">
-    <template #brand>
-      <a href="/" class="brand-link" aria-label="Meddleware home">
-        <span class="brand-mark" aria-hidden="true">◆</span>
-        <span>Meddleware</span>
-      </a>
-    </template>
-    <template #actions>
-      <nav class="header-nav" aria-label="Site">
-        <a href="https://dash.meddleware.co.uk" class="header-nav__link">Dashboard</a>
-        <a href="https://docs.meddleware.co.uk" class="header-nav__link" target="_blank" rel="noopener noreferrer">Docs</a>
-      </nav>
-    </template>
-  </AppHeader>
+    <slot />
 
-  <main id="main-content">
-    <RouterView />
-  </main>
-
-  <AppFooter variant="dark">
-    <template #start>
-      <CopyrightLine symbolVariant="kopimi" organisation-name="Meddleware" rightsStatement="jam" />
+    <template #footer>
+      <AppFooter variant="dark" docs-url="https://docs.meddleware.co.uk" dev-url="https://meddleware.dev">
+        <template #start>
+          <!-- The one canonical home of the legal documents: they are served from this origin. -->
+          <CopyrightLine symbol-variant="kopimi" organisation-name="Meddleware" rights-statement="jam" legal-base="/legal/" />
+        </template>
+        <!-- The header's links are hidden on a narrow screen (there is no room beside the colour-mode control); they are here too. -->
+        <template #end>
+          <a href="https://dash.meddleware.co.uk">Dashboard</a>
+        </template>
+      </AppFooter>
     </template>
-    <template #end>
-      <a href="https://dash.meddleware.co.uk" class="footer-link">Dashboard</a>
-      <a href="https://docs.meddleware.co.uk" class="footer-link" target="_blank" rel="noopener noreferrer">Documentation</a>
-      <a href="https://meddleware.dev" class="footer-link" target="_blank" rel="noopener noreferrer">Developer docs</a>
-    </template>
-  </AppFooter>
+  </UiAppShell>
 </template>
 
 <style scoped>
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  padding: var(--space-2xs) var(--space-xs);
-  background: var(--accent);
-  color: var(--accent-contrast);
-  font-size: var(--font-size-sm);
-  z-index: 100;
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
-.brand-link {
-  display: flex;
+.brand {
+  display: inline-flex;
   align-items: center;
   gap: var(--space-2xs);
   color: inherit;
   text-decoration: none;
-  font-weight: 650;
+  font-weight: var(--font-weight-brand);
   letter-spacing: var(--tracking-wide);
 }
 
-.brand-mark {
+.mark {
   color: var(--accent);
 }
 
-.header-nav {
+nav {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
 }
 
-.header-nav__link {
-  color: inherit;
-  text-decoration: none;
-  font-size: var(--font-size-sm);
-  opacity: 0.8;
-  transition: opacity var(--transition-base, 150ms ease);
-}
-
-.header-nav__link:hover {
-  opacity: 1;
-}
-
-/* The footer already sets the muted token colour (AA on its background in every theme x season); dimming it
-   further with opacity dropped it below 4.5:1 (audit F10), so the hover state is the underline alone. */
-.footer-link {
+nav a {
   color: inherit;
   text-decoration: none;
   font-size: var(--font-size-sm);
 }
 
-.footer-link:hover {
+nav a:hover {
   text-decoration: underline;
+}
+
+/* On a narrow screen the brand and the colour-mode control fill the header; the same links are in the footer and the page. */
+@media (width < 40em) {
+  nav {
+    display: none;
+  }
 }
 </style>
