@@ -30,7 +30,7 @@ RUN node scripts/check-csp-inline.mjs "${CSP}" dist
 # static-server is a minimal Go binary image — no shell, no package manager.
 # See https://github.com/meddleware-org/static-server for configuration details.
 
-FROM quay.io/meddleware-org/static-server:0.1.11@sha256:94685b948d5086ccdb5b0b5d3b7caef6f2e3d1e4b9f7f8a311e9f26950da3723
+FROM quay.io/meddleware-org/static-server:0.1.12@sha256:f2cdfac6c795ee8a442e144e9c2d9eabbbe6566c41fdc696fe3befe2aa8d052d
 ARG CSP
 ENV CONTENT_SECURITY_POLICY="${CSP}"
 
