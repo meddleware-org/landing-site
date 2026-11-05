@@ -3,7 +3,7 @@
 **Classification:** Internal security review
 **Project:** `repos/landing-site` — the corporate landing page (`meddleware.co.uk`): hero, tool cards, links to the dashboard and docs
 **Project type:** Vue app (static single-page site; no library entry)
-**Template:** AUDIT_TEMPLATE.md (2026-10-08) + AUDIT_TEMPLATE_TS.md (2026-10-08) + AUDIT_TEMPLATE_VUE.md (2026-10-08) + AUDIT_TEMPLATE_IMG.md (2026-10-08)
+**Template:** AUDIT_TEMPLATE.md (2026-11-01) + AUDIT_TEMPLATE_TS.md (2026-11-01) + AUDIT_TEMPLATE_VUE.md (2026-11-01) + AUDIT_TEMPLATE_IMG.md (2026-10-08) + AUDIT_TEMPLATE_A11Y.md (2026-11-01)
 **Package manager / lockfile:** npm 11, committed (also copied into the image for SBOM tools)   **Module format:** ESM   **Publish model:** image only (`private: true` from 0.0.7; not on npm)
 **Runtime targets:** browser   **Peer dependencies:** none
 **Build tool:** vite 8.3.3, `@vitejs/plugin-vue` 6.0.9, vue 3.5.43, vue-router 5.3.1, vue-tsc 3.3.12, TypeScript 6.0.3
@@ -16,7 +16,7 @@
 **Deployed by:** `post-bootstrap/landing-site/overlays/default`; digest from `config/images.yaml`
 **Build args:** `CSP` only (the Content-Security-Policy string) — not secret, not a test switch; no `VITE_*`
 **Deployment status:** image `quay.io/meddleware-org/landing-site` 0.0.12 serving `meddleware.co.uk` (`sha256:8a7f57af…a286`; release tag `v0.0.12` = `6ceec28`; released, signature verified and deployed 2026-10-18, rollout succeeded; 0.0.11 `sha256:392c4b1b…` was deployed 2026-10-09; the narrowed CSP (`connect-src 'self'`, `img-src 'self' data:`, no `worker-src`) is live (header re-read 2026-10-18) and the live page produced zero console errors and zero CSP violations in headless Chromium, Cloudflare edge scripts included; live page links the five live tool hosts, the dashboard and the docs). The package is not on npm (confirmed 404 again 2026-10-10).
-**Review date:** 2026-10-03 (first pass) · re-verified 2026-10-09 · fixes 2026-10-18 (0.0.12, released and deployed); 0.0.17 re-verified 2026-10-30 (Point the developer-docs and indexer links at the machine zone (ADR-0005); current @meddleware packages); 0.0.18 re-verified 2026-10-30 (Dependency updates (minor and patch groups) and workflow action bumps); 0.0.19 re-verified 2026-10-31 (Colour mode switch, shared buttons and cards, canonical legal host)
+**Review date:** 2026-10-03 (first pass) · re-verified 2026-10-09 · fixes 2026-10-18 (0.0.12, released and deployed); 0.0.17 released 2026-10-30 (Point the developer-docs and indexer links at the machine zone (ADR-0005); current @meddleware packages); 0.0.18 released 2026-10-30 (Dependency updates (minor and patch groups) and workflow action bumps); 0.0.19 released 2026-10-31 (Colour mode switch, shared buttons and cards, canonical legal host); frontend-wave delta review 2026-11-01 (real review of the 2026-10-19 → 2026-11-01 changes; see the delta section)
 **Reviewer:** Internal review
 **Severity ceiling:** Low — a static page with no wallet, chain access, forms or user data.
 **Status:** re-verified 2026-10-09; F5, F6, F7, F9, F10 and F11 fixed in 0.0.12 (commit `ee6a1f2`; released and deployed 2026-10-18, signature verified, rollout succeeded, zero console errors / CSP violations on the live page)
@@ -60,6 +60,8 @@ probe. **F12** the cosign identity pinned the repository, not the workflow (RESO
 `verify-digests.sh` default is now workflow-anchored). Still open: **F13** registry mirror and credential inventory (DEFERRED, maintainer).
 
 The severity ceiling stays Low.
+
+**2026-11-01 update.** The page was rebuilt on the shared components, and the repository became the only host of the legal pages. The review found nothing to fix and recorded the one new dependency that role creates — every site's legal link relies on this host (F14, accepted, verified live including the PDF's checksum) — and confirmed the no-request page and its proven CSP (F15) and the sweep (F16).
 
 ## Threat model / trust boundaries
 
@@ -292,6 +294,33 @@ verifies signatures, so it would not run).
 **Remediation / evidence:** the mirror is listed as best-effort; the public jobs have no
 `continue-on-error`. The credential inventory (scope, holder, expiry, rotation) is the maintainer item.
 
+### Frontend wave delta review (2026-11-01) — 0.0.17 to 0.0.19 reviewed · 0.0.20 prepared
+
+Scope: the changes since the last substantive entry (2026-10-24, which logged the rename and `robots.txt`/`llms.txt`): the page rebuilt from `@meddleware/ui` buttons, cards and the colour-mode switch (`ToolCard`, `routes.ts` and the page stylesheet removed; the tool list is data in `tools.ts`), a prerendered 404 page, and — new to this repository's role — **the only host of the legal pages**: `meddleware.co.uk/legal/` serves `copyright.html`, `copyleft.html` and the kopimi PDF for every other site's footer (D103), after the other repositories deleted their 11.6 MB copies. The release tool's "re-verified" marks for these releases recorded no review; this section is the review. Read: `App.vue`, `tools.ts`, `mount.ts`, `not-found.ts`, `main.ts`, `public/legal/`, the Dockerfile and its CSP, `scripts/check-csp-inline.mjs`, `e2e/csp.spec.ts` (the built pages loaded under exactly the served policy), the workflows and the tests; and, live, the legal files and the response headers of `https://meddleware.co.uk/`. Ran (with the locally packed `ui` 0.1.38, `design-tokens` 0.1.13, `web-utils` 0.0.2, `frontend-config` 0.0.2): the audit gate (0 not allowlisted; the two `extract-zip` advisories are allowlisted until 2027-01-31), `vue-tsc`, lint (stylelint, eslint, html-validate), `vitest` (2 files, 21 tests), the production build and `check:csp` (no inline script in the four built pages: the image serves `script-src 'self'`), `npm pack --dry-run` (not applicable: the package is private and ships as an image), and the browser suite on Chromium, Firefox, WebKit, a Pixel 7 and an iPhone 14 with the CI font (DejaVu Sans through fontconfig): **165 passed in 3.0 minutes**.
+
+### F14 — Every site's legal links depend on this one host being up
+**Severity:** Low   **Disposition:** ACCEPTED-RISK
+**Where:** `public/legal/*` served at `meddleware.co.uk/legal/`; `@meddleware/ui` `CopyrightLine` (`legalBase` default `https://meddleware.co.uk/legal/`)
+**Issue:** since D103 the copyright, copyleft and kopimi notices exist in one place. Each site's footer links to them cross-origin (in a new tab, `rel="noopener noreferrer"`, through `safeHref`). If the landing host is down or the files are removed, every footer's legal link breaks at once.
+**Impact:** none for the tools themselves (the links leave the page; no tool loads anything from the legal host). The notices are static, rarely requested and cached at the edge; a visitor sees a failed link, not a failed app.
+**Remediation / evidence:** accepted: one canonical host removes eleven stale copies and their 11.6 MB each from the images (the alternative, a copy per image, was the defect). Checked live on 2026-11-05: `copyright.html` and `copyleft.html` answer 200 as `text/html`; the PDF answers 200, 11 644 704 bytes, `application/pdf`, and its SHA-256 `6887d78b…1480` equals the checksum recorded in `ui`'s `legal/README.md` and the repository's own file; the page sends CSP, HSTS (`max-age=31536000; includeSubDomains`), `Referrer-Policy`, `Permissions-Policy` and `X-Content-Type-Options`. An app that must serve the notices itself passes `legal-base="/legal/"` to `CopyrightLine`.
+
+### F15 — Positive: the page makes no request at all and the CSP is proven against the built pages
+**Severity:** Positive
+**Where:** `Dockerfile`, `scripts/check-csp-inline.mjs`, `e2e/csp.spec.ts`, `src/tools.ts`
+**Evidence:** the policy keeps every fetch directive on `'self'` and `script-src 'self'` with no hash (the page makes no request, stores nothing but the colour mode, loads no remote image or font); `scripts/check-csp-inline.mjs` fails the build on an inline script (4 built pages, none), and `e2e/csp.spec.ts` loads each built page under exactly the served policy and fails on any violation, with a control proving the policy is enforced in the test (a cross-origin request is a violation). Every tool card's link goes through `safeHref`; the four tool hosts answer 200 (checked 2026-11-05). The repository applies the chain-access lint boundary (`vueApp({ sui: true })`) although the page has no chain code, so none can be added unseen.
+
+### F16 — Positive: the shared sweep covers every screen and passes on five browsers with the CI font
+**Severity:** Positive
+**Where:** e2e/a11y.spec.ts (`defineA11ySuite`, AAA `gate`)
+**Evidence:** two pages — the home page and the prerendered 404 — each at AA and AAA (gating) in all ten theme × season looks, at 320 px, 200% text, in forced colours, under reduced motion and by keyboard, plus the CSP spec, on five browser projects: 165 tests passed with the CI font.
+
+### Delta notes (A11Y lens, `AUDIT_TEMPLATE_A11Y.md`)
+- **Support promise:** the shared browserslist (`@meddleware/frontend-config/browserslist-config`); build target through `viteTarget()`; compat lints on.
+- **Accessibility gates:** the shared sweep over two pages (axe AA and AAA `gate`; 320 px reflow; 200% text; forced colours; reduced motion; keyboard incl. focus not obscured), the CSP spec, Lighthouse CI on the production build, `check:csp`, five browser projects in CI.
+- **Known exceptions:** none disabled; the 44 px enhanced target size, link purpose, reading order and screen-reader announcements are reviewed from screenshots (`npm run shots`), not automated.
+- **Supply chain:** `.github/audit-gate.mjs` with two dated `extract-zip` allowlist entries (dev-only, via `@lhci/cli`, expiry 2027-01-31, D104; OPERATOR_TASKS.md) and the `basic-ftp`/`tmp`/`zod` overrides; Dependabot (npm, Actions, Docker); `@meddleware/frontend-config` is a dev dependency (its audit F5).
+
 ## Section A — Invariant verification matrix
 
 | # | Invariant | Enforced at | Proven by | Status |
@@ -508,3 +537,4 @@ None.
 - 2026-10-22 (audit close-out) — release 0.0.13 (`v0.0.13` = `5752b4f`; `Publish (Docker)` succeeded). Image base: static-server 0.1.11 (Go 1.26.10 standard library, CVE-2026-111943, so the scan-before-sign gate passes; static-server F13). No disposition change. Not re-run in this pass: the unit tests, the build and the audit gate (the tag's own CI and publish runs succeeded).
 - 2026-10-24 — repository renamed from `landing` to `landing-site` (workspace naming convention, `docs/architecture/ADR-0003-naming.md`): package, image, host and path names updated throughout. No finding, disposition or evidence changed.
 - 2026-10-24 — ships its own `robots.txt` (Content Signals `search=yes, ai-input=yes`) and `llms.txt` instead of static-server defaults (workspace ADR-0005). No finding changed.
+- 2026-11-01 — frontend-wave delta review of 0.0.17 to 0.0.19. Read the page and 404 sources, the legal files and their live serving, the CSP and its checks, build configuration, workflows and Dockerfile; ran the gates and the five-browser suite with the CI font (165 passed in 3.0 minutes). Nothing to fix in the page; recorded F14 (every site's legal links depend on this one host: ACCEPTED-RISK, checked live — the PDF's SHA-256 equals the recorded checksum) and F15–F16 as Positive. The release tool's bare "re-verified" marks were reworded to "released". `**Template:**` dates reconciled to the 2026-11-01 registry (TS/VUE changes add rows; the VUE colour row moved to A11Y, applied in full here) with no disposition change.
