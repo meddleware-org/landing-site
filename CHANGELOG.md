@@ -5,6 +5,16 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.21] - 2026-11-06
+
+### Added
+
+- `LICENSE` (0BSD) and a README.
+
+### Changed
+
+- Takes `@meddleware/ui` ^0.1.39 (the tab list items use `role="none"`) and the Dependabot merges of 2026-11-06: image bases `static-server` 0.1.12 and a refreshed `node` build image, and newer dev tools.
+
 ## [0.0.20] - 2026-11-05
 
 ### Changed
