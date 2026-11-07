@@ -5,6 +5,13 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.22] - 2026-11-07
+
+### Changed
+
+- The wording about where the tools run comes from the deployment records (`src/network.json`, checked in CI), so "mainnet is coming" becomes "live" with the records and not before.
+- Configuration through `@meddleware/frontend-config` (Vite, Vitest, TypeScript, audit gate, licences, CSP check); the hero uses two spans instead of a line break.
+
 ## [0.0.21] - 2026-11-06
 
 ### Added

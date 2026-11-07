@@ -11,7 +11,7 @@
 # Content-Security-Policy served by static-server. The page makes no request at all (no fetch, no storage but the
 # colour mode, no remote image or font), so every fetch directive stays on 'self' (connect-src, img-src and
 # worker-src are no longer opened to any https origin). e2e/csp.spec.ts loads the built pages under exactly this
-# policy and fails on any violation; scripts/check-csp-inline.mjs fails the build on an inline script.
+# policy and fails on any violation; mw-check-csp-inline fails the build on an inline script.
 ARG CSP="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
 
 FROM node:26-slim@sha256:0d1e33586362bb9e608c4e751e7a9e7edb55c9ac11461ed5666af696cc461dd4 AS build
@@ -24,7 +24,7 @@ COPY . .
 RUN npm run build && npm run licenses
 ARG CSP
 # The CSP has no 'unsafe-inline' for scripts: the build fails if dist/ ever carries an inline <script>.
-RUN node scripts/check-csp-inline.mjs "${CSP}" dist
+RUN npx mw-check-csp-inline "${CSP}" dist
 
 # ── runtime stage ─────────────────────────────────────────────────────────────
 # static-server is a minimal Go binary image — no shell, no package manager.

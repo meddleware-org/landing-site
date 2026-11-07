@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { UiButton } from '@meddleware/ui'
+import { liveOn } from '../network'
 </script>
 
 <template>
@@ -8,9 +9,8 @@ import { UiButton } from '@meddleware/ui'
       <p class="eyebrow" aria-hidden="true">◆ On-chain tooling</p>
       <h1 id="hero-headline">Tooling for the decentralised web</h1>
       <p class="subheading">
-        Protocol-agnostic infrastructure, developer tools, and on-chain primitives.
-        <br class="line-break" />
-        Currently live on Sui.
+        <span class="line">Protocol-agnostic infrastructure, developer tools, and on-chain primitives.</span>
+        <span class="line">{{ liveOn }}</span>
       </p>
       <p class="actions">
         <UiButton href="https://dash.meddleware.co.uk">Open Dashboard</UiButton>
@@ -69,13 +69,10 @@ h1 {
   color: var(--muted);
 }
 
-.line-break {
-  display: none;
-}
-
+/* Two sentences flow as one paragraph on a narrow screen and take a line each on a wide one. */
 @media (width >= 37.5em) {
-  .line-break {
-    display: inline;
+  .line {
+    display: block;
   }
 }
 
