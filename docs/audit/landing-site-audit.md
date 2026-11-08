@@ -459,7 +459,7 @@ test-hook scan to run.
 - [x] CSP and HSTS on the one hosting path (B.VUE-1); no wallet events or irreversible actions to guard (VUE-M4–M6 not applicable)
 - [x] contrast checked in a browser in every theme × season — F10 (0.0.12, commit `ee6a1f2`: `e2e/contrast.spec.ts`, 16 tests; found and fixed the footer links at 4.12:1)
 - [ ] registry credential inventory and rotation (F13) — `OPERATOR_TASKS.md` "Image registry credentials"
-- [ ] external review — maintainer item (`OPERATOR_TASKS.md` "Funding, grants and an external audit")
+- [ ] external review (ADR-0009 gate G4: not a launch gate; covered by redeploy and the audit pass) — maintainer item (`OPERATOR_TASKS.md` "Funding, grants and an external audit")
 
 ## Cross-project themes
 
