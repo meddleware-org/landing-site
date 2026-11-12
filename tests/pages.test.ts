@@ -3,6 +3,8 @@
 // with one heading, the footer with the legal link on this origin, the colour-mode control, and the links the page claims to have.
 import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { readdirSync, readFileSync, statSync } from 'node:fs'
+import { join } from 'node:path'
 import App from '../src/App.vue'
 import HomeView from '../src/views/HomeView.vue'
 import NotFoundView from '../src/views/NotFoundView.vue'
@@ -24,6 +26,15 @@ describe.each([
   it('starts with a skip link to the main landmark', () => {
     const skip = w.get('a')
     expect(skip.attributes('href')).toBe(`#${w.get('main').attributes('id')}`)
+  })
+
+  it('shows the company mark before the name in the header link, which keeps its accessible name', () => {
+    const brand = w.get('header a[aria-label="Meddleware home"]')
+    expect(brand.attributes('href')).toBe('/')
+    expect(brand.text()).toBe('Meddleware')
+    const mark = brand.get('svg.mw-brand-mark')
+    expect(mark.attributes('aria-hidden')).toBe('true')
+    expect(brand.element.firstElementChild).toBe(mark.element)
   })
 
   it('has a header with the site navigation, the colour-mode control, and a footer', () => {
@@ -66,6 +77,33 @@ describe('the home page content', () => {
 
   it('has no inline style attributes', () => {
     expect(w.html()).not.toMatch(/\sstyle="/)
+  })
+})
+
+describe('the hero', () => {
+  const w = page(HomeView)
+
+  it('uses the company mark in the eyebrow and as the large faint decoration, both hidden from assistive technology', () => {
+    const eyebrow = w.get('.eyebrow')
+    expect(eyebrow.text()).toBe('On-chain tooling')
+    expect(eyebrow.get('svg.mw-brand-mark').attributes('aria-hidden')).toBe('true')
+    const glyph = w.get('svg.glyph')
+    expect(glyph.classes()).toContain('mw-brand-mark')
+    expect(glyph.attributes('aria-hidden')).toBe('true')
+  })
+})
+
+describe('the brand', () => {
+  const sources = (dir: string): string[] =>
+    readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? sources(join(dir, n)) : [join(dir, n)]))
+
+  it('has no diamond stand-in left in the sources', () => {
+    for (const f of sources('src')) expect(readFileSync(f, 'utf8'), f).not.toContain('◆')
+  })
+
+  it('keeps no icon of its own: the favicon set comes from the shared brand icons', () => {
+    expect(sources('public').filter((f) => /favicon/.test(f))).toEqual([])
+    for (const f of ['index.html', '404.html']) expect(readFileSync(f, 'utf8'), f).not.toMatch(/rel="icon"/)
   })
 })
 

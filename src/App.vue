@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AppFooter, AppHeader, ColorModeControl, CopyrightLine, UiAppShell, useColorMode } from '@meddleware/ui'
+import { AppFooter, AppHeader, BrandMark, ColorModeControl, CopyrightLine, UiAppShell, useColorMode } from '@meddleware/ui'
 
 // Dark is the brand default; a visitor's saved choice always wins.
 const { mode, set } = useColorMode('dark')
@@ -10,7 +10,7 @@ const { mode, set } = useColorMode('dark')
     <template #header>
       <AppHeader variant="transparent" :sticky="true" :solidify-on-scroll="true">
         <template #brand>
-          <a href="/" class="brand" aria-label="Meddleware home"><span class="mark" aria-hidden="true">◆</span> Meddleware</a>
+          <a href="/" class="brand" aria-label="Meddleware home"><BrandMark class="mark" /> Meddleware</a>
         </template>
         <template #actions>
           <nav aria-label="Site">

@@ -15,13 +15,13 @@ marketing/navigation page. Keep it that way.
 src/
   main.ts / not-found.ts  The entries of index.html and 404.html: tokens, seasons, the ui reset, then mountPage(view)
   mount.ts            mountPage(view): the shell (App) around one view
-  App.vue             UiAppShell (skip link, <main>) + AppHeader (transparent; site links, ColorModeControl) + AppFooter (dark)
+  App.vue             UiAppShell (skip link, <main>) + AppHeader (transparent; the `BrandMark` before the name, site links, ColorModeControl) + AppFooter (dark)
   tools.ts            The tools shown on the page: one card each
   views/
     HomeView.vue      Composes HeroSection + FeaturesGrid + CtaSection
     NotFoundView.vue  The 404 page content
   components/
-    HeroSection.vue   Full-viewport hero with gradient, headline, UiButton CTAs
+    HeroSection.vue   Full-viewport hero with gradient, headline, UiButton CTAs; `BrandMark` in the eyebrow and as the large faint decoration
     FeaturesGrid.vue  A UiCard (a link through its title) per entry of tools.ts
     CtaSection.vue    Secondary CTA strip with dashboard and docs links
   styles/main.css     Link underline offset and smooth in-page scrolling (the rest is the ui reset)
@@ -62,6 +62,11 @@ Cloudflare Tunnel: `meddleware.co.uk` → `https://nginx-ingress-controller.ngin
 app links to them there (`CopyrightLine`'s default `legalBase`) and ships no copy; here the footer uses `legal-base="/legal/"` so they are
 served from this origin. Do not delete `public/legal/` here.
 
+**Brand and icons.** The company mark is `BrandMark` from `@meddleware/ui` (the Kopimi "K", `currentColor`); no `◆` stand-in remains. The
+site keeps no `public/favicon.*`: `meddlewareApp({ name: 'Meddleware' })` emits the icon set and web manifest and injects the link tags into
+both `index.html` and `404.html`. `tests/dist.test.ts` (after a build; CI sets `REQUIRE_DIST=1`) checks the icon set once per page and that
+the built site loads nothing from a third-party origin and ships no font file. No analytics, no third-party fonts or CDN.
+
 **No router.** The page is one route, so there is no vue-router: `index.html` and `404.html` are two entries (`main.ts`, `not-found.ts`)
 over the same shell, and the server answers an unknown path with `404.html` and a real 404 status.
 
@@ -75,7 +80,7 @@ npm install
 npm run type-check  # vue-tsc
 npm run build       # type-check + vite build → dist/
 npm run dev         # local dev server at http://localhost:5173
-npm test            # vitest: inline-script check, route table
+npm test            # vitest: the two pages, network wording, built-site checks (tests/dist.test.ts needs a build)
 npm run check:csp   # after build: no inline script that the Dockerfile CSP forbids
 npm run test:e2e    # Playwright + axe (contrast, theme x season) and a no-violation load under the CSP
 bash scripts/smoke.sh <image>   # container probe (CONTAINER_ENGINE=podman for rootless)

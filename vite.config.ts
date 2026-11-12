@@ -8,6 +8,7 @@ export default defineConfig(
   meddlewareApp({
     plugins: [vue()],
     wallet: false,
+    name: 'Meddleware',
     config: { base: '/', build: { rollupOptions: { input: { main: 'index.html', notFound: '404.html' } } } },
   }),
 )

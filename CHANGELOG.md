@@ -5,6 +5,14 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.23] - 2026-11-08
+
+### Changed
+
+- The company mark (the Kopimi "K", `BrandMark` from `@meddleware/ui` 0.1.41) replaces the `◆` stand-ins: before the name in the header, in the hero eyebrow, and as the large faint decoration behind the hero.
+- The favicon set (SVG, ICO, Apple touch icon, 192/512 icons) and the web manifest come from the shared brand icons through `@meddleware/frontend-config` 0.0.8, on both the home page and the 404 page; the site's own `favicon.svg` is gone.
+- Internal: `DO_NOT_TRACK=1` in both workflows; a built-site test (icon set once per page, no font file or third-party origin); `@meddleware/web-utils` ^0.0.4.
+
 ## [0.0.22] - 2026-11-07
 
 ### Changed

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { UiButton } from '@meddleware/ui'
+import { BrandMark, UiButton } from '@meddleware/ui'
 import { liveOn } from '../network'
 </script>
 
 <template>
   <section class="hero" aria-labelledby="hero-headline">
     <div class="content">
-      <p class="eyebrow" aria-hidden="true">◆ On-chain tooling</p>
+      <p class="eyebrow" aria-hidden="true"><BrandMark /> On-chain tooling</p>
       <h1 id="hero-headline">Tooling for the decentralised web</h1>
       <p class="subheading">
         <span class="line">Protocol-agnostic infrastructure, developer tools, and on-chain primitives.</span>
@@ -18,7 +18,7 @@ import { liveOn } from '../network'
       </p>
     </div>
     <!-- A large decorative mark: a shape, not text, so there is nothing for contrast to apply to. -->
-    <svg class="glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 0 24 12 12 24 0 12Z" /></svg>
+    <BrandMark class="glyph" />
   </section>
 </template>
 
@@ -89,9 +89,9 @@ h1 {
   position: absolute;
   right: -6vw;
   bottom: -8vw;
-  width: 40vw;
-  height: 40vw;
-  fill: var(--accent);
+  --mw-brand-size: 40vw;
+
+  color: var(--accent);
   opacity: 0.04;
   pointer-events: none;
 }
