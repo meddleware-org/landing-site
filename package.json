@@ -30,7 +30,7 @@
     "@meddleware/web-utils": "^0.0.4"
   },
   "devDependencies": {
-    "@lhci/cli": "^0.15.1",
+    "@lhci/cli": "^0.16.1",
     "@meddleware/access-gate-client": "^0.0.13",
     "@meddleware/frontend-config": "^0.0.8",
     "@meddleware/sealed-storage-client": "^0.0.26",
