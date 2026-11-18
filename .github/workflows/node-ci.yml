@@ -75,7 +75,7 @@ jobs:
         run: npm run check:csp
 
   e2e:
-    name: Real-browser accessibility (Playwright + axe, theme × season)
+    name: Lighthouse (the built page)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -84,6 +84,10 @@ jobs:
           node-version: '26'
       - name: Install dependencies
         run: npm ci
+      # Lighthouse serves dist/ (vite preview); the browser tests, which built it here before, now run in their own jobs.
+      - name: Build
+        run: npm run build
+
       - name: Lighthouse (accessibility 100, best practices, bundle budgets)
         run: npx lhci autorun
 
