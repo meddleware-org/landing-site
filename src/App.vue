@@ -8,7 +8,7 @@ const { mode, set } = useColorMode('dark')
 <template>
   <UiAppShell>
     <template #header>
-      <AppHeader variant="transparent" :sticky="true" :solidify-on-scroll="true">
+      <AppHeader variant="transparent" :sticky="true">
         <template #brand>
           <a href="/" class="brand" aria-label="Meddleware home"><BrandMark class="mark" /> Meddleware</a>
         </template>

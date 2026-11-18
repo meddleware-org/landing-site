@@ -5,6 +5,13 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.24] - 2026-11-18
+
+### Fixed
+
+- The header looks the same at every scroll position: it was fully transparent for the first 8 px of scroll and then faded in a frosted background, border and shadow, which read as a jolt (`@meddleware/ui` 0.1.44; the page was the only user of `solidifyOnScroll`, now removed). The hero and the 404 page use the small viewport height (`svh`), so a phone's address bar collapsing does not move the centred content.
+- Takes `@meddleware/ui` ^0.1.44 and `@meddleware/frontend-config` ^0.0.15 (the accessibility suite now checks that a sticky header holds still).
+
 ## [0.0.23] - 2026-11-08
 
 ### Changed

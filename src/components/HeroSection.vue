@@ -25,7 +25,9 @@ import { liveOn } from '../network'
 <style scoped>
 .hero {
   position: relative;
-  min-height: calc(100dvh - var(--mw-header-height, 56px));
+  /* The small viewport height: a phone's address bar collapsing while the page is scrolled does not change it, so the centred content does not
+     move a few pixels into the scroll (the dynamic height, dvh, did). */
+  min-height: calc(100svh - var(--mw-header-height, 56px));
   display: flex;
   align-items: center;
   justify-content: center;
