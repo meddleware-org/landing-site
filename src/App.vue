@@ -2,7 +2,7 @@
 import { AppFooter, AppHeader, BrandMark, ColorModeControl, CopyrightLine, UiAppShell, useColorMode } from '@meddleware/ui'
 
 // Dark is the brand default; a visitor's saved choice always wins.
-const { mode, set } = useColorMode('dark')
+const { mode, set, remember, setRemember } = useColorMode('dark')
 </script>
 
 <template>
@@ -17,7 +17,7 @@ const { mode, set } = useColorMode('dark')
             <a href="https://dash.meddleware.co.uk">Dashboard</a>
             <a href="https://docs.meddleware.co.uk" target="_blank" rel="noopener noreferrer">Docs</a>
           </nav>
-          <ColorModeControl :model-value="mode" @update:model-value="set" />
+          <ColorModeControl :model-value="mode" :remember="remember" @update:model-value="set" @update:remember="setRemember" />
         </template>
       </AppHeader>
     </template>
