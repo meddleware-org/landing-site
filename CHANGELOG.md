@@ -5,6 +5,10 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.25] - 2026-11-19
+
+- The same changes as 0.0.24. That version's tag was placed on a commit whose CI workflow ran Lighthouse before building the site, so its image was never built or published; 0.0.25 is the first build with those changes.
+
 ## [0.0.24] - 2026-11-18
 
 ### Fixed
