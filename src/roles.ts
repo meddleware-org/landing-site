@@ -2,7 +2,8 @@ import type { RoleGuideRole } from '@meddleware/ui'
 
 /**
  * The role guide's paths ("I'm here to…"), approved 2026-11-20 (docs/copy-review/2026-11-landing-and-role-guide.md §4). About the
- * platform, never one tool or technology. Links go only to pages that exist; "Standards we use" waits for the interoperability map (Part G).
+ * platform, never one tool or technology. Links go only to pages that exist. "Run my own" links to the source code until the lean
+ * self-hosting guide exists (workspace FU-0170).
  */
 export const ROLES: RoleGuideRole[] = [
   {
@@ -28,7 +29,10 @@ export const ROLES: RoleGuideRole[] = [
     steps: ['Read the open APIs and packages.', 'Build on the same open standards we use.', 'Ship your work beside ours, or on top of it.'],
     need: 'Whatever you build with.',
     get: 'Open-source code and documented interfaces you can rely on.',
-    links: [{ text: 'Developer guide ↗', href: 'https://meddleware.dev/getting-started/' }],
+    links: [
+      { text: 'Developer guide ↗', href: 'https://meddleware.dev/getting-started/' },
+      { text: 'Standards we use ↗', href: 'https://meddleware.dev/platform/standards' },
+    ],
   },
   {
     id: 'platforms',
