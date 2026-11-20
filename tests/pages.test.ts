@@ -13,7 +13,7 @@ import { TOOLS } from '../src/tools'
 const page = (view: typeof HomeView) => mount(App, { slots: { default: view } })
 
 describe.each([
-  ['home', HomeView, 'Tooling for the decentralised web'],
+  ['home', HomeView, 'The useful parts of the internet, without the gatekeepers.'],
   ['404', NotFoundView, 'Page not found'],
 ])('the %s page', (_name, view, heading) => {
   const w = page(view)
@@ -56,20 +56,36 @@ describe.each([
 describe('the home page content', () => {
   const w = page(HomeView)
 
-  it('has a card per tool, each a link to that tool', () => {
-    const cards = w.findAll('li').filter((li) => li.find('h3').exists())
+  it('has a card per tool in the catalogue, each a link to that tool, naming what it runs on', () => {
+    const cards = w.findAll('#available li')
     expect(cards.map((c) => c.get('h3').text())).toEqual(TOOLS.map((t) => t.title))
     for (const [i, tool] of TOOLS.entries()) {
       expect(cards[i]!.get('h3 a').attributes('href')).toBe(new URL(tool.href).href)
       expect(cards[i]!.text()).toContain(tool.description)
+      expect(cards[i]!.text()).toContain(`${tool.name} · runs on ${tool.runsOn}`)
     }
   })
 
-  it('hides the decorative icons from assistive technology', () => {
-    for (const li of w.findAll('li').filter((l) => l.find('h3').exists())) expect(li.find('[aria-hidden="true"]').exists()).toBe(true)
+  it('leads with the promises, not a tool or a technology', () => {
+    const promises = w.get('section[aria-labelledby="promises-heading"]')
+    expect(promises.findAll('li').map((li) => li.get('h3').text())).toEqual(['You can leave', 'It works with others', 'Nobody is watching', 'You can run it yourself'])
+    expect(w.get('main').text()).not.toMatch(/on-chain|blockchain/i)
   })
 
-  it('offers the dashboard and the docs as buttons, and marks the docs as opening a new tab', () => {
+  it('offers the three paths as a role guide', () => {
+    expect(w.findAll('fieldset input[type="radio"]').map((r) => r.attributes('value'))).toEqual(['people', 'developers', 'platforms'])
+  })
+
+  it('links the treasury from the footer, not the catalogue', () => {
+    expect(w.get('footer').findAll('a').some((a) => a.attributes('href') === 'https://treasury.meddleware.co.uk')).toBe(true)
+    expect(w.get('#available').html()).not.toContain('treasury')
+  })
+
+  it('hides the decorative icons from assistive technology', () => {
+    for (const li of w.findAll('#available li')) expect(li.find('[aria-hidden="true"]').exists()).toBe(true)
+  })
+
+  it('marks the documentation link as opening a new tab', () => {
     const docs = w.findAll('a').filter((a) => a.attributes('href') === 'https://docs.meddleware.co.uk/' && a.text().includes('↗'))
     expect(docs.length).toBeGreaterThan(0)
     for (const a of docs) expect(a.attributes('rel')).toBe('noopener noreferrer')
@@ -85,7 +101,7 @@ describe('the hero', () => {
 
   it('uses the company mark in the eyebrow and as the large faint decoration, both hidden from assistive technology', () => {
     const eyebrow = w.get('.eyebrow')
-    expect(eyebrow.text()).toBe('On-chain tooling')
+    expect(eyebrow.text()).toBe('Open by design')
     expect(eyebrow.get('svg.mw-brand-mark').attributes('aria-hidden')).toBe('true')
     const glyph = w.get('svg.glyph')
     expect(glyph.classes()).toContain('mw-brand-mark')

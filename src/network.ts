@@ -7,3 +7,6 @@ export const mainnetLive = network.mainnet.status === 'live'
 
 /** The one sentence the page uses for where the tools run. */
 export const liveOn = mainnetLive ? 'Live on Sui testnet and mainnet.' : 'Live on Sui testnet; mainnet is coming.'
+
+/** The networks a tool card says it runs on (from the same data, never prose): "test network" until every product is on mainnet. */
+export const networkLabel = mainnetLive ? 'test and main networks' : 'test network'

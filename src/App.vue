@@ -33,6 +33,8 @@ const { mode, set, remember, setRemember } = useColorMode('dark')
         <!-- The header's links are hidden on a narrow screen (there is no room beside the colour-mode control); they are here too. -->
         <template #end>
           <a href="https://dash.meddleware.co.uk">Dashboard</a>
+          <!-- Meddleware's own funds, in public: a footer link, not a catalogue tool (FU-0169). -->
+          <a href="https://treasury.meddleware.co.uk">Treasury</a>
         </template>
       </AppFooter>
     </template>

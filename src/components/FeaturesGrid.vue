@@ -1,22 +1,21 @@
 <script setup lang="ts">
 import { UiCard } from '@meddleware/ui'
 import { TOOLS } from '../tools'
+import { networkLabel } from '../network'
 </script>
 
 <template>
-  <section class="features" aria-labelledby="features-heading">
+  <!-- The catalogue: the tools available now. It grows and changes; the platform is not defined by it (COPY_STANDARD.md). -->
+  <section id="available" class="features" aria-labelledby="features-heading">
     <header class="intro">
-      <h2 id="features-heading">What's in the dashboard</h2>
-      <p>
-        Five on-chain tools — all accessible via a single wallet connection at
-        <a href="https://dash.meddleware.co.uk">dash.meddleware.co.uk</a>,
-        or as standalone micro-apps on their own subdomains.
-      </p>
+      <h2 id="features-heading">Available now</h2>
+      <p>The first tools. More are on the way, and they won't all be about the same thing.</p>
     </header>
     <ul class="grid" role="list">
-      <UiCard v-for="tool in TOOLS" :key="tool.title" as="li" plain :level="3" :title="tool.title" :href="tool.href">
+      <UiCard v-for="tool in TOOLS" :key="tool.name" as="li" plain :level="3" :title="tool.title" :href="tool.href">
         <template #icon><span aria-hidden="true">{{ tool.icon }}</span></template>
         <p>{{ tool.description }}</p>
+        <p class="meta">{{ tool.name }} · runs on {{ tool.runsOn }} · {{ networkLabel }}</p>
       </UiCard>
     </ul>
   </section>
@@ -24,6 +23,8 @@ import { TOOLS } from '../tools'
 
 <style scoped>
 .features {
+  /* The hero's and the guide's "available" links land here, below the sticky header. */
+  scroll-margin-block-start: var(--space-2xl);
   padding: var(--space-xl) var(--space-sm);
   background: var(--surface);
   border-block: 1px solid var(--border);
@@ -45,9 +46,20 @@ import { TOOLS } from '../tools'
   overflow-wrap: anywhere;
 }
 
+/* The headings say what a tool does, so they are longer than a tool's name: keep them at the card-title size. */
+.grid :deep(.mw-card__title) {
+  font-size: var(--font-size-md);
+}
+
+.meta {
+  margin: var(--space-2xs) 0 0;
+  color: var(--muted);
+  font-size: var(--font-size-sm);
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
   gap: var(--space-xs);
 }
 </style>
