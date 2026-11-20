@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- **The page describes the platform by its purpose** (copy review 1, approved 2026-11-20): open alternatives to what gatekeepers
+  lock people into; the four promises every tool makes; "Choose your path" (`UiRoleGuide`, `@meddleware/ui` 0.1.46: use the tools,
+  build with them, run my own); the tools available now as a catalogue that grows (each card names what it runs on and its network);
+  the roadmap. The treasury moves to the footer. New title and description.
 - CI: `HOME=/root` is set on the browser-test command only, not the whole job, so the runner no longer warns that it cannot read
   `/root/.docker/config.json`.
 - `overrides.chrome-launcher: ^1.2.3`: Lighthouse CI (`@lhci/cli` 0.16.1, the newest) still asks for chrome-launcher 0.13, which pulls
