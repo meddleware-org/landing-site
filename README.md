@@ -19,3 +19,7 @@ npm run test:e2e      # Playwright sweep (E2E_BROWSERS=all adds Firefox, WebKit 
 npm run lint && npm run type-check
 npm run build && npm run check:csp
 ```
+
+## Open standards
+
+What this project speaks, what is planned and where you can extend it: [docs/INTEROP.md](docs/INTEROP.md).
