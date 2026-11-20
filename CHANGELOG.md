@@ -5,7 +5,7 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.0.28] - 2026-11-20
 
 - **The page describes the platform by its purpose** (copy review 1, approved 2026-11-20): open alternatives to what gatekeepers
   lock people into; the four promises every tool makes; "Choose your path" (`UiRoleGuide`, `@meddleware/ui` 0.1.46: use the tools,
