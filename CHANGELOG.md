@@ -5,6 +5,10 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- The role guide's "Build with them" path links to "Standards we use" on the developer site.
+
 ## [0.0.28] - 2026-11-20
 
 - **The page describes the platform by its purpose** (copy review 1, approved 2026-11-20): open alternatives to what gatekeepers
