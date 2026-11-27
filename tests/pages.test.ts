@@ -10,12 +10,15 @@ import HomeView from '../src/views/HomeView.vue'
 import NotFoundView from '../src/views/NotFoundView.vue'
 import { TOOLS } from '../src/tools'
 
+// Mount the shell around a view.
 const page = (view: typeof HomeView) => mount(App, { slots: { default: view } })
 
+// The same checks for both pages.
 describe.each([
   ['home', HomeView, 'The useful parts of the internet, without the gatekeepers.'],
   ['404', NotFoundView, 'Page not found'],
 ])('the %s page', (_name, view, heading) => {
+  // The mounted page.
   const w = page(view)
 
   it('has one page heading, inside the main landmark', () => {
@@ -53,6 +56,7 @@ describe.each([
   })
 })
 
+// The home page's content.
 describe('the home page content', () => {
   const w = page(HomeView)
 
@@ -96,6 +100,7 @@ describe('the home page content', () => {
   })
 })
 
+// The hero's decoration.
 describe('the hero', () => {
   const w = page(HomeView)
 
@@ -109,6 +114,7 @@ describe('the hero', () => {
   })
 })
 
+// The brand's icons come from the shared set.
 describe('the brand', () => {
   const sources = (dir: string): string[] =>
     readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? sources(join(dir, n)) : [join(dir, n)]))
@@ -123,6 +129,7 @@ describe('the brand', () => {
   })
 })
 
+// The catalogue.
 describe('the tool list', () => {
   it('links only to https addresses', () => {
     for (const t of TOOLS) expect(t.href).toMatch(/^https:\/\//)

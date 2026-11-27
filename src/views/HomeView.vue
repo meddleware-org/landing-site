@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // The home page, in the approved order (docs/copy-review/2026-11-landing-and-role-guide.md): the purpose, the promises, the paths, the
 // tools available now, and what is next.
+// The sections of the home page, in the approved order.
 import HeroSection from '../components/HeroSection.vue'
 import PromisesSection from '../components/PromisesSection.vue'
 import GuideSection from '../components/GuideSection.vue'
@@ -10,8 +11,12 @@ import CtaSection from '../components/CtaSection.vue'
 
 <template>
   <HeroSection />
+  <!-- What every tool promises. -->
   <PromisesSection />
+  <!-- Choose your path. -->
   <GuideSection />
+  <!-- The tools available now. -->
   <FeaturesGrid />
+  <!-- What is next. -->
   <CtaSection />
 </template>

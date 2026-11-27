@@ -1,5 +1,6 @@
 // Which networks the platform is deployed on, from src/network.json (written by `mw-network-status` from the clients' deployment records, and
 // checked in CI). Nothing on the page names a network that file does not: the day every record has a `mainnet` key, the wording changes with it.
+// The data `mw-network-status` writes from the clients' deployment records.
 import network from './network.json'
 
 /** True once every product has a mainnet deployment record. */

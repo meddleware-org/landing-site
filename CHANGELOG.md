@@ -5,6 +5,10 @@ All notable changes to landing are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Documentation pass (workspace documentation standard): every file has a header and line-level comments, every declaration a doc comment; `CONTRIBUTING.md` and `AGENTS.md` are new. The files synced from `@meddleware/frontend-config` now carry that package's commented templates (`npx mw-sync --write`). The npm-publish workflow's "not configured" warning had a garbled word and now reads "npm publishing is not configured". The built pages are unchanged apart from one header comment in each of `index.html` and `404.html`.
+
 ## [0.0.29] - 2026-11-20
 
 - The role guide's "Build with them" path links to "Standards we use" on the developer site.

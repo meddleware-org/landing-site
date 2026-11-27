@@ -17,8 +17,10 @@ export interface Tool {
   href: string
 }
 
+/** The tools available now, in the order the page shows them. A new tool is a new entry here and nothing else on the page changes. */
 export const TOOLS: readonly Tool[] = [
   {
+        // Walrus Storage: files no one can take down.
     icon: '🗄',
     title: "Keep files no one can take down",
     name: 'Walrus Storage',
@@ -27,6 +29,7 @@ export const TOOLS: readonly Tool[] = [
     href: 'https://sui-walrus-storage.meddleware.co.uk',
   },
   {
+        // Sealed Storage: files only the right people can open.
     icon: '🔒',
     title: 'Choose who can open a file',
     name: 'Sealed Storage',
@@ -35,6 +38,7 @@ export const TOOLS: readonly Tool[] = [
     href: 'https://sui-sealed-storage.meddleware.co.uk',
   },
   {
+        // Access Gate: selling access to work.
     icon: '🔐',
     title: 'Sell access to your work',
     name: 'Access Gate',
@@ -43,6 +47,7 @@ export const TOOLS: readonly Tool[] = [
     href: 'https://sui-access-gate.meddleware.co.uk',
   },
   {
+        // Token Issuance: making a coin.
     icon: '🪙',
     title: 'Issue your own token',
     name: 'Token Issuance',

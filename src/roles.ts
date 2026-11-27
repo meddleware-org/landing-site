@@ -1,3 +1,4 @@
+  // The shared role guide's role shape.
 import type { RoleGuideRole } from '@meddleware/ui'
 
 /**
@@ -7,6 +8,7 @@ import type { RoleGuideRole } from '@meddleware/ui'
  */
 export const ROLES: RoleGuideRole[] = [
   {
+      // The first path: people who want to use the tools.
     id: 'people',
     title: 'Use the tools',
     summary: 'Get things done without being kept.',
@@ -15,7 +17,9 @@ export const ROLES: RoleGuideRole[] = [
       'Use it in your browser. Each tool says what it needs before you start, and none needs an account with us.',
       'Take your data with you whenever you like.',
     ],
+        // What the person needs before starting.
     need: 'Only what the tool says (some use a wallet).',
+        // What the person gets.
     get: 'The tool, without the lock-in.',
     links: [
       { text: 'Available now', href: '#available' },
@@ -23,6 +27,7 @@ export const ROLES: RoleGuideRole[] = [
     ],
   },
   {
+      // The second path: developers who want to build with them.
     id: 'developers',
     title: 'Build with them',
     summary: 'Connect your work to open tools and APIs.',
@@ -35,12 +40,14 @@ export const ROLES: RoleGuideRole[] = [
     ],
   },
   {
+      // The third path: organisations that want to run their own copy.
     id: 'platforms',
     title: 'Run my own',
     summary: 'Host the tools under your own name.',
     steps: ['Choose the tools you want to offer.', 'Host them on your own server.', 'Run them under your own name.'],
     need: 'A server and a domain.',
     get: 'The same tools, yours to run.',
+        // Until the lean self-hosting guide exists, this path links to the source.
     links: [{ text: 'Source code ↗', href: 'https://github.com/meddleware-org' }],
   },
 ]

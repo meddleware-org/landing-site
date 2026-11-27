@@ -3,4 +3,5 @@
 import { defineA11ySuite } from '@meddleware/frontend-config/a11y'
 import { open } from './open.js'
 
+// The two pages, each opened by its path.
 defineA11ySuite({ home: open('/'), '404 page': open('/404.html') }, { aaa: 'gate' })
