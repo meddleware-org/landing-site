@@ -1,6 +1,6 @@
 {
   "name": "@meddleware/landing-site",
-  "version": "0.0.29",
+  "version": "0.0.30",
   "private": true,
   "type": "module",
   "scripts": {
@@ -24,16 +24,16 @@
     "check:network": "mw-network-status --check src/network.json"
   },
   "dependencies": {
-    "@meddleware/design-tokens": "^0.1.13",
-    "@meddleware/ui": "^0.1.46",
-    "@meddleware/web-utils": "^0.0.4",
+    "@meddleware/design-tokens": "^0.1.14",
+    "@meddleware/ui": "^0.1.47",
+    "@meddleware/web-utils": "^0.0.5",
     "vue": "^3.5.44"
   },
   "devDependencies": {
     "@lhci/cli": "^0.16.1",
-    "@meddleware/access-gate-client": "^0.0.13",
-    "@meddleware/frontend-config": "^0.0.16",
-    "@meddleware/sealed-storage-client": "^0.0.26",
+    "@meddleware/access-gate-client": "^0.0.14",
+    "@meddleware/frontend-config": "^0.0.17",
+    "@meddleware/sealed-storage-client": "^0.0.28",
     "@playwright/test": "~1.64.1",
     "@types/node": "~26.6.5",
     "@vitejs/plugin-vue": "^6.0.10",
